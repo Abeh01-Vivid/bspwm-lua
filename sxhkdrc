@@ -1,0 +1,128 @@
+#
+# sxhkdrc - dwm-style keybinds for bspwm
+# Place at ~/.config/sxhkd/sxhkdrc
+#
+
+# terminal / launcher (dwm: mod+shift+return, mod+p)
+super + Return
+    st
+
+super + p
+    rofi -show drun
+
+# rofi window switcher (dwm doesn't have this natively, but useful with bspwm)
+super + Tab
+    rofi -show window
+
+# kill focused window (dwm: mod+shift+c)
+super + shift + c
+    bspc node -c
+
+# quit / restart bspwm (dwm: mod+shift+q, mod+shift+r)
+super + shift + q
+    bspc quit
+
+super + shift + r
+    bspc wm -r
+
+# toggle floating (dwm: mod+shift+space)
+super + shift + space
+    bspc node -t ~floating
+
+# toggle fullscreen / monocle (dwm: mod+f)
+super + f
+    bspc desktop -l next
+
+# zoom / swap with master (dwm: mod+return)
+super + shift + Return
+    bspc node @parent -R 90
+
+# focus next/prev window (dwm: mod+j, mod+k)
+super + j
+    bspc node -f next.local
+
+super + k
+    bspc node -f prev.local
+
+# move window in stack (dwm: mod+shift+j, mod+shift+k)
+super + shift + j
+    bspc node -s next.local
+
+super + shift + k
+    bspc node -s prev.local
+
+# resize master area (dwm: mod+h, mod+l)
+super + h
+    bspc node @focused -z left -20 0 || bspc node @focused -z right -20 0
+
+super + l
+    bspc node @focused -z right 20 0 || bspc node @focused -z left 20 0
+
+# increase/decrease number of master windows (dwm: mod+comma, mod+period)
+super + comma
+    bspc node @/ -B
+
+super + period
+    bspc node @/ -E
+
+# view tag / desktop (dwm: mod+[1-9], using your kanji labels 一-九)
+super + 1
+    bspc desktop -f '一'
+super + 2
+    bspc desktop -f '二'
+super + 3
+    bspc desktop -f '三'
+super + 4
+    bspc desktop -f '四'
+super + 5
+    bspc desktop -f '五'
+super + 6
+    bspc desktop -f '六'
+super + 7
+    bspc desktop -f '七'
+super + 8
+    bspc desktop -f '八'
+super + 9
+    bspc desktop -f '九'
+
+# move window to tag (dwm: mod+shift+[1-9])
+super + shift + 1
+    bspc node -d '一'
+super + shift + 2
+    bspc node -d '二'
+super + shift + 3
+    bspc node -d '三'
+super + shift + 4
+    bspc node -d '四'
+super + shift + 5
+    bspc node -d '五'
+super + shift + 6
+    bspc node -d '六'
+super + shift + 7
+    bspc node -d '七'
+super + shift + 8
+    bspc node -d '八'
+super + shift + 9
+    bspc node -d '九'
+
+# toggle bar (dwm: mod+b) - depends on your bar (polybar/slstatus + lemonbar/etc)
+super + b
+    pkill -SIGUSR1 -x slstatus
+
+# reload sxhkd
+super + shift + BackSpace
+    pkill -USR1 -x sxhkd
+
+# volume / media keys (common dwm addition)
+XF86AudioRaiseVolume
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+XF86AudioLowerVolume
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+XF86AudioMute
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# screenshot (common dwm-flexipatch addition, mod+shift+s)
+super + shift + s
+    maim -s ~/Pictures/screenshot-$(date +%s).png
